@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
 	return (
 		<footer id="contact" className="border-t border-black/10 bg-neutral-950 text-neutral-200">
@@ -15,7 +17,7 @@ export default function Footer() {
 					<ul className="mt-3 space-y-2 text-sm text-neutral-400">
 						<li><a className="transition hover:text-white" href="#about">About</a></li>
 						<li><a className="transition hover:text-white" href="#resources">Resources</a></li>
-						<li><a className="transition hover:text-white" href="#login">Login</a></li>
+						<li><Link className="transition hover:text-white" href="/authenticate/login">Login</Link></li>
 					</ul>
 				</div>
 

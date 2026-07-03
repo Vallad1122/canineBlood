@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Navigation() {
     return (
         <nav className="border-b border-black/10 bg-white">
@@ -21,9 +23,9 @@ export default function Navigation() {
                     <a className="transition hover:text-neutral-900" href="#contact">
                         Contact
                     </a>
-                    <a className="rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800" href="#login">
+                    <Link className="rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800" href="/authenticate/login">
                         Login
-                    </a>
+                    </Link>
                 </nav>
                 <div className="md:hidden">
                     <button className="text-sm font-medium text-neutral-600 transition hover:text-neutral-900">
