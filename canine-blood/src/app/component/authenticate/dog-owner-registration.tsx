@@ -37,9 +37,14 @@ export default function DogOwnerRegistration() {
     const [passwordError, setPasswordError] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [submitError, setSubmitError] = useState("");
+    const [submitSuccess, setSubmitSuccess] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
+		setSubmitError("");
+		setSubmitSuccess("");
 
 		const firstNameValidationError = validateFirstName(firstName);
 		const lastNameValidationError = validateLastName(lastName);
@@ -60,7 +65,55 @@ export default function DogOwnerRegistration() {
 			return;
 		}
 
-		alert("Form is valid");
+		try {
+			setIsSubmitting(true);
+			const response = await fetch("/api/registration/dog_owner", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					firstName,
+					lastName,
+					mobileNumber,
+					email,
+					homeAddress,
+					password,
+					confirmPassword,
+				}),
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				if (data?.errors) {
+					setFirstNameError(data.errors.firstName ?? "");
+					setLastNameError(data.errors.lastName ?? "");
+					setMobileNumberError(data.errors.mobileNumber ?? "");
+					setEmailError(data.errors.email ?? "");
+					setHomeAddressError(data.errors.homeAddress ?? "");
+					setPasswordError(data.errors.password ?? "");
+					setConfirmPasswordError(data.errors.confirmPassword ?? "");
+					setSubmitError("Please fix the highlighted fields.");
+				} else {
+					setSubmitError(data?.error ?? "Registration failed.");
+				}
+				return;
+			}
+
+			setSubmitSuccess(data?.message ?? "Registration successful.");
+			setFirstName("");
+			setLastName("");
+			setMobileNumber("");
+			setEmail("");
+			setHomeAddress("");
+			setPassword("");
+			setConfirmPassword("");
+		} catch {
+			setSubmitError("Unable to submit right now. Please try again.");
+		} finally {
+			setIsSubmitting(false);
+		}
 	}
 
 	return (
@@ -94,6 +147,8 @@ export default function DogOwnerRegistration() {
 						className="mt-6 grid gap-4 sm:grid-cols-2"
 						onSubmit={handleSubmit}
 					>
+						{submitError ? <p className="sm:col-span-2 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700">{submitError}</p> : null}
+						{submitSuccess ? <p className="sm:col-span-2 rounded-lg border border-green-300 bg-green-50 px-3 py-2 text-sm text-green-700">{submitSuccess}</p> : null}
 						<label className="block">
 							<span className="mb-2 block text-sm font-medium text-neutral-700">First Name</span>
 							<input
@@ -179,8 +234,8 @@ export default function DogOwnerRegistration() {
 						</label>
 
 						<div className="sm:col-span-2 flex flex-col gap-3">
-							<button type="submit" className="rounded-xl bg-red-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-red-800">
-								Register Dog Owner
+							<button type="submit" disabled={isSubmitting} className="rounded-xl bg-red-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-70">
+								{isSubmitting ? "Registering..." : "Register Dog Owner"}
 							</button>
 							<Link href="/authenticate/registration" className="text-center text-sm font-semibold text-red-700 transition hover:text-red-800">
 								Back to role selection

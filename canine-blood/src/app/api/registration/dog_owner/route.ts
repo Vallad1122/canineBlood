@@ -91,7 +91,7 @@ export async function POST(request: Request) {
         // Hash the password before storing it in the database
         const hashedPassword = hashPassword(body.password!);
 
-        const [result] = await db.query(
+        await db.query(
             "INSERT INTO dog_owners (first_name, last_name, mobile_number, email, home_address, hashed_password) VALUES (?, ?, ?, ?, ?, ?)",
             [body.firstName, body.lastName, body.mobileNumber, email, body.homeAddress, hashedPassword]
         );
@@ -100,6 +100,9 @@ export async function POST(request: Request) {
         return NextResponse.json({ message: "Registration successful" }, { status: 200 });
     } catch (error) {
         console.error("Error during registration:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        const message = process.env.NODE_ENV === "development" && error instanceof Error
+            ? error.message
+            : "Internal Server Error";
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }
