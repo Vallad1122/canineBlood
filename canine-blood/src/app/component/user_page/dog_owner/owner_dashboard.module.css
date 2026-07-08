@@ -1,0 +1,217 @@
+.page {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(190, 18, 60, 0.2), transparent 42%),
+    radial-gradient(circle at 88% 8%, rgba(127, 29, 29, 0.25), transparent 35%),
+    linear-gradient(160deg, #fff7f8 0%, #ffe4e8 45%, #ffd2da 100%);
+  color: #3f0d17;
+  font-family: "Trebuchet MS", "Franklin Gothic Medium", "Segoe UI", sans-serif;
+}
+
+.shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #fff8f9 0%, #ffe2e7 100%);
+  border: 1px solid rgba(127, 29, 29, 0.22);
+  box-shadow: 0 10px 24px rgba(127, 29, 29, 0.12);
+}
+
+.brandWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 92px;
+  height: auto;
+  border-radius: 8px;
+  filter: drop-shadow(0 4px 8px rgba(127, 29, 29, 0.26));
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brandTitle {
+  margin: 0;
+  letter-spacing: 0.8px;
+  font-size: 1.12rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #7f1d1d;
+}
+
+.brandTag {
+  margin: 0;
+  font-size: 0.83rem;
+  color: #9f1239;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ghostLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  border: 1px solid rgba(127, 29, 29, 0.22);
+  color: #7f1d1d;
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 140ms ease, background-color 140ms ease;
+}
+
+.ghostLink:hover {
+  transform: translateY(-1px);
+  background: #fff;
+}
+
+.hero {
+  border-radius: 18px;
+  padding: 26px;
+  background: linear-gradient(120deg, #7f1d1d 0%, #be123c 55%, #e11d48 100%);
+  color: #fff3f5;
+  box-shadow: 0 14px 34px rgba(127, 29, 29, 0.28);
+  animation: enterUp 420ms ease-out;
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.5vw, 2.1rem);
+  font-weight: 800;
+}
+
+.heroSubtitle {
+  margin: 8px 0 16px;
+  max-width: 680px;
+  font-size: 0.97rem;
+  color: #ffe4e8;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metricCard {
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.metricLabel {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #ffd5de;
+}
+
+.metricValue {
+  margin: 4px 0 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  animation: enterUp 520ms ease-out;
+}
+
+.actionCard {
+  text-decoration: none;
+  border-radius: 14px;
+  padding: 16px;
+  background: #fff8f9;
+  border: 1px solid rgba(127, 29, 29, 0.2);
+  box-shadow: 0 8px 18px rgba(127, 29, 29, 0.1);
+  color: #4c0519;
+  display: block;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.actionCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(159, 18, 57, 0.45);
+  box-shadow: 0 14px 24px rgba(127, 29, 29, 0.17);
+}
+
+.actionTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #7f1d1d;
+}
+
+.actionDesc {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  color: #6b1c2a;
+}
+
+@keyframes enterUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .metrics,
+  .actionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .page {
+    padding: 16px;
+  }
+
+  .hero {
+    padding: 20px;
+  }
+
+  .navLinks {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
